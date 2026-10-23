@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Architecture Masterclass: Optimal HTML Structure Guide</title>
+    
+    <!-- Tailwind CSS for UI Layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Prism.js for Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+
+    <style>
+        /* Custom UI styles and Inspector Highlights */
+        .seo-highlight {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .seo-highlight:hover {
+            outline: 2px dashed #3b82f6;
+            outline-offset: 2px;
+        }
+        .seo-active {
+            outline: 3px solid #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.05);
+        }
+        .tag-badge {
+            font-size: 0.65rem;
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen flex flex-col">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 text-white p-2 rounded-lg font-bold text-xl">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight">SEO Blueprint & Studio</h1>
+                    <p class="text-xs text-slate-400">Optimal Structural Compliance & Code Blueprint</p>
+                </div>
+            </div>
+
+            <!-- View Mode Switcher -->
+            <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-700">
+                <button id="btn-preview" onclick="switchView('preview')" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white shadow">
+                    <i class="fa-solid fa-eye mr-1.5"></i> Live Interactive Demo
+                </button>
+                <button id="btn-code" onclick="switchView('code')" class="px-4 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-code mr-1.5"></i> File Sources (index, style, script)
+                </button>
+                <button id="btn-audit" onclick="switchView('audit')" class="px-4 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-clipboard-check mr-1.5"></i> SEO Checklist Audit
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col gap-4">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: INTERACTIVE LIVE PREVIEW & INSPECTOR -->
+        <!-- ========================================== -->
+        <div id="view-preview" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- Sidebar Controls & Tag Highlighter -->
+            <aside class="lg:col-span-4 bg-slate-800 p-5 rounded-2xl border border-slate-700 h-fit space-y-6">
+                <div>
+                    <h2 class="text-base font-bold text-white mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Interactive SEO Inspector
+                    </h2>
+                    <p class="text-xs text-slate-400">Click any component below to highlight its semantic placement and review why it matters for SEO algorithms.</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Semantic Elements</label>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <button onclick="highlightSEO('head-meta')" class="p-2.5 bg-slate-700/50 hover:bg-slate-700 rounded-lg text-left border border-slate-600 flex items-center justify-between">
+                            <span><i class="fa-solid fa-tags text-blue-400 mr-2"></i>Head & Meta</span>
+                            <span class="tag-badge bg-blue-900/60 text-blue-300">Head</span>
+                        </button>
+                        <button onclick="highlightSEO('json-ld')" class="p-2.5 bg-slate-700/50 hover:bg-slate-700 rounded-lg text-left border border-slate-600 flex items-center justify-between">
+                            <span><i class="fa-solid fa-code text-purple-400 mr-2"></i>Schema JSON-LD</span>
+                            <span class="tag-badge bg-purple-900/60 text-purple-300">Data</span>
+                        </button>
+                        <button onclick="highlightSEO('headings')" class="p-2.5 bg-slate-700/50 hover:bg-slate-700 rounded-lg text-left border border-slate-600 flex items-center justify-between">
+                            <span><i class="fa-solid fa-heading text-emerald-400 mr-2"></i>H1-H3 Hierarchy</span>
+                            <span class="tag-badge bg-emerald-900/60 text-emerald-300">H1..3</span>
+                        </button>
+                        <button onclick="highlightSEO('semantic-nav')" class="p-2.5 bg-slate-700/50 hover:bg-slate-700 rounded-lg text-left border border-slate-600 flex items-center justify-between">
+                            <span><i class="fa-solid fa-compass text-amber-400 mr-2"></i>Breadcrumbs & Nav</span>
+                            <span class="tag-badge bg-amber-900/60 text-amber-300">Nav</span>
+                        </button>
+                        <button onclick="highlightSEO('article-main')" class="p-2.5 bg-slate-700/50 hover:bg-slate-700 rounded-lg text-left border border-slate-600 flex items-center justify-between">
+                            <span><i class="fa-solid fa-newspaper text-rose-400 mr-2"></i>Main Article</span>
+                            <span class="tag-badge bg-rose-900/60 text-rose-300">Main</span>
+                        </button>
+                        <button onclick="highlightSEO('seo-image')" class="p-2.5 bg-slate-700/50 hover:bg-slate-700 rounded-lg text-left border border-slate-600 flex items-center justify-between">
+                            <span><i class="fa-solid fa-image text-cyan-400 mr-2"></i>Optimized Image</span>
+                            <span class="tag-badge bg-cyan-900/60 text-cyan-300">Img</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live SEO Explanation Card -->
+                <div id="inspector-info" class="p-4 bg-slate-900/80 rounded-xl border border-slate-700 text-xs space-y-2">
+                    <div class="flex items-center gap-2 text-amber-400 font-semibold">
+                        <i class="fa-solid fa-info-circle"></i> Inspector Ready
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">
+                        Select an element above to inspect how structured markup impacts crawlability, indexability, accessibility (A11y), and Google Search rankings.
+                    </p>
+                </div>
+
+                <!-- SERP Simulation Preview -->
+                <div class="border-t border-slate-700 pt-4">
+                    <h3 class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-3">Google SERP Preview Simulation</h3>
+                    <div class="bg-white text-slate-900 p-3 rounded-xl shadow font-sans text-xs space-y-1">
+                        <div class="flex items-center gap-1.5 text-xs text-slate-600 truncate">
+                            <span class="text-slate-800 font-medium">https://example.com</span>
+                            <span>› articles › seo-structure-guide</span>
+                        </div>
+                        <div class="text-blue-800 text-sm font-medium hover:underline cursor-pointer truncate">
+                            SEO Architecture Masterclass: Optimal HTML Structure Guide (2026)
+                        </div>
+                        <div class="text-slate-600 text-xs line-clamp-2 leading-normal">
+                            Master semantic HTML5 markup, structured JSON-LD data, heading hierarchies, open graph tags, and image optimization for maximum search engine performance.
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Rendered Render-Target Page Mockup -->
+            <div class="lg:col-span-8 bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden flex flex-col">
+                <!-- Mock Browser Bar -->
+                <div class="bg-slate-950 px-4 py-2 border-b border-slate-800 flex items-center gap-2">
+                    <div class="flex gap-1.5">
+                        <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                    </div>
+                    <div class="flex-1 bg-slate-900 rounded-md px-3 py-1 text-xs text-slate-400 flex items-center gap-2 border border-slate-800">
+                        <i class="fa-solid fa-lock text-emerald-500 text-[10px]"></i>
+                        <span>https://example.com/articles/seo-structure-guide</span>
+                    </div>
+                </div>
+
+                <!-- Page Content Rendering Container -->
+                <div class="p-6 overflow-y-auto max-h-[750px] bg-slate-900/40 text-slate-200 space-y-6" id="demo-rendered-content">
+                    
+                    <!-- Head Metadata Panel (Simulated in page for inspection) -->
+                    <div id="target-head-meta" class="seo-highlight p-4 bg-slate-800/90 rounded-xl border border-blue-500/30 text-xs space-y-2">
+                        <div class="flex justify-between items-center text-blue-400 font-bold border-b border-slate-700 pb-2">
+                            <span><i class="fa-solid fa-code mr-1"></i> Document &lt;head&gt; SEO Elements</span>
+                            <span class="text-[10px] bg-blue-900/50 px-2 py-0.5 rounded text-blue-200">Non-Visual / Crucial</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-slate-300 font-mono text-[11px]">
+                            <div><strong class="text-slate-400">&lt;html lang="en"&gt;:</strong> Specifies language context</div>
+                            <div><strong class="text-slate-400">&lt;title&gt;:</strong> 50-60 Characters (CTR focus)</div>
+                            <div><strong class="text-slate-400">&lt;meta name="description"&gt;:</strong> ~155 Characters</div>
+                            <div><strong class="text-slate-400">&lt;link rel="canonical"&gt;:</strong> Prevents duplicate content</div>
+                            <div><strong class="text-slate-400">Open Graph (og:*):</strong> Social Sharing Preview</div>
+                            <div><strong class="text-slate-400">Twitter Cards:</strong> Rich Twitter Snippets</div>
+                        </div>
+                    </div>
+
+                    <!-- JSON-LD Schema Indicator -->
+                    <div id="target-json-ld" class="seo-highlight p-4 bg-slate-800/90 rounded-xl border border-purple-500/30 text-xs space-y-2">
+                        <div class="flex justify-between items-center text-purple-400 font-bold border-b border-slate-700 pb-2">
+                            <span><i class="fa-solid fa-brackets-curly mr-1"></i> Structured Data (&lt;script type="application/ld+json"&gt;)</span>
+                            <span class="text-[10px] bg-purple-900/50 px-2 py-0.5 rounded text-purple-200">Schema.org TechArticle</span>
+                        </div>
+                        <p class="text-slate-300 text-xs">
+                            Helps search bots parse entity relationships, author details, published date, and breadcrumbs directly without guessing content logic.
+                        </p>
+                    </div>
+
+                    <!-- Breadcrumbs Nav -->
+                    <nav id="target-semantic-nav" aria-label="Breadcrumb" class="seo-highlight p-2 text-xs text-slate-400 flex items-center gap-2 bg-slate-800/40 rounded-lg">
+                        <ol class="flex items-center gap-2 flex-wrap" itemscope itemtype="https://schema.org/BreadcrumbList">
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <a itemprop="item" href="#home" class="hover:text-blue-400 flex items-center gap-1">
+                                    <i class="fa-solid fa-house text-[10px]"></i> <span itemprop="name">Home</span>
+                                </a>
+                                <meta itemprop="position" content="1" />
+                            </li>
+                            <li>/</li>
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <a itemprop="item" href="#articles" class="hover:text-blue-400">
+                                    <span itemprop="name">Articles</span>
+                                </a>
+                                <meta itemprop="position" content="2" />
+                            </li>
+                            <li>/</li>
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="text-slate-200 font-medium">
+                                <span itemprop="name">SEO Structure Guide</span>
+                                <meta itemprop="position" content="3" />
+                            </li>
+                        </ol>
+                    </nav>
+
+                    <!-- Article Body Content -->
+                    <article id="target-article-main" class="seo-highlight bg-slate-800/50 p-6 rounded-2xl border border-slate-700/80 space-y-6">
+                        
+                        <!-- Header / H1 -->
+                        <header class="space-y-3 border-b border-slate-700 pb-6">
+                            <div class="inline-block px-2.5 py-1 bg-blue-900/40 text-blue-300 text-xs font-semibold rounded-full border border-blue-700/50">
+                                Web Architecture & SEO
+                            </div>
+                            
+                            <!-- Strict Single H1 Tag -->
+                            <h1 id="target-headings" class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+                                Complete SEO Compliance Blueprint: Technical Guide for 2026
+                            </h1>
+
+                            <div class="flex items-center gap-4 text-xs text-slate-400 pt-1">
+                                <span class="flex items-center gap-1"><i class="fa-regular fa-user"></i> By Alex Rivera</span>
+                                <span class="flex items-center gap-1"><i class="fa-regular fa-calendar"></i> October 24, 2026</span>
+                                <span class="flex items-center gap-1"><i class="fa-regular fa-clock"></i> 6 min read</span>
+                            </div>
+                        </header>
+
+                        <!-- Dynamic Table of Contents Section -->
+                        <nav aria-label="Table of Contents" class="bg-slate-900/80 p-4 rounded-xl border border-slate-700 space-y-2">
+                            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                                <i class="fa-solid fa-list-ul text-blue-400"></i> Table of Contents
+                            </h2>
+                            <ul id="dynamic-toc" class="text-xs space-y-1.5 text-blue-400 pl-4 list-disc">
+                                <!-- Generated Dynamically via script.js -->
+                            </ul>
+                        </nav>
+
+                        <!-- Article Content Section 1 -->
+                        <section id="section-heading-hierarchy" class="space-y-3">
+                            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2 border-l-4 border-emerald-500 pl-2">
+                                1. Logical Heading Hierarchy (H1 through H3)
+                            </h2>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Search engines rely on headings to build an outline of your web page. A document should only ever contain <strong>a single &lt;h1&gt; element</strong> representing the main title, followed by properly nested &lt;h2&gt; sub-sections and &lt;h3&gt; sub-topics.
+                            </p>
+
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs space-y-2">
+                                <h3 class="text-sm font-semibold text-emerald-400">
+                                    Sub-Topic: Heading Nesting Rulebook
+                                </h3>
+                                <p class="text-slate-400">
+                                    Never skip levels (e.g., jumping from H1 directly to H3). Skipping levels breaks the semantic accessibility tree for screen readers and dilutes search index entity relations.
+                                </p>
+                            </div>
+                        </section>
+
+                        <!-- Article Content Section 2: Image Optimization -->
+                        <section id="section-image-optimization" class="space-y-4">
+                            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2 border-l-4 border-cyan-500 pl-2">
+                                2. Accessible & Performant Image Assets
+                            </h2>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                For optimal SEO, images must contain meaningful, descriptive <code>alt</code> text, explicit <code>width</code> and <code>height</code> attributes to prevent Cumulative Layout Shifts (CLS), and modern lazy loading parameters.
+                            </p>
+
+                            <!-- Example Optimized Image -->
+                            <figure id="target-seo-image" class="seo-highlight bg-slate-900 p-3 rounded-xl border border-slate-700 space-y-2">
+                                <img 
+                                    src="https://placehold.co/800x400/1e293b/38bdf8?text=Semantic+SEO+Architecture+Diagram" 
+                                    alt="Diagram displaying semantic HTML5 structure including header, main, section, and article tags for optimal web crawler indexing" 
+                                    width="800" 
+                                    height="400" 
+                                    loading="lazy" 
+                                    decoding="async"
+                                    class="rounded-lg w-full h-auto object-cover border border-slate-800"
+                                    onerror="this.src='https://placehold.co/800x400/1e293b/ffffff?text=Image+Load+Fallback'"
+                                >
+                                <figcaption class="text-[11px] text-center text-slate-400 italic">
+                                    Figure 1: Complete hierarchy map for semantic search indexing and visual layout.
+                                </figcaption>
+                            </figure>
+                        </section>
+
+                        <!-- Article Content Section 3: Semantic Internal Links -->
+                        <section id="section-internal-links" class="space-y-3">
+                            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2 border-l-4 border-amber-500 pl-2">
+                                3. Descriptive Anchor Text & Link Equity
+                            </h2>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Avoid non-descriptive links like "click here" or "read more". Instead, embed contextual keyword phrases into your internal links. Learn more in our detailed resource on 
+                                <a href="#internal-linking-guide" class="text-blue-400 font-medium hover:underline inline-flex items-center gap-1">
+                                    internal link optimization strategies <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </a>.
+                            </p>
+                        </section>
+
+                    </article>
+
+                    <!-- Sidebar Content / Related Articles -->
+                    <aside class="bg-slate-800/40 p-4 rounded-xl border border-slate-700 space-y-3">
+                        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-bookmark text-amber-400"></i> Related SEO Resources
+                        </h2>
+                        <ul class="text-xs space-y-2">
+                            <li>
+                                <a href="#schema-guide" class="text-slate-300 hover:text-blue-400 flex items-center justify-between">
+                                    <span>JSON-LD Schema Implementation Guide</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#mobile-indexing" class="text-slate-300 hover:text-blue-400 flex items-center justify-between">
+                                    <span>Core Web Vitals & Mobile-First Indexing</span>
+                                    <i class="fa-solid fa-chevron-right text-[10px] text-slate-500"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </aside>
+
+                    <!-- Semantic Footer -->
+                    <footer class="bg-slate-950 p-6 rounded-xl border border-slate-800 text-xs text-slate-400 flex flex-wrap justify-between items-center gap-4">
+                        <div>
+                            <p class="font-medium text-slate-300">© 2026 SEO Reference Architecture</p>
+                            <p class="text-[11px] text-slate-500">Built for search crawler standards & high accessibility performance.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="#privacy" class="hover:text-slate-200">Privacy Policy</a>
+                            <a href="#sitemap" class="hover:text-slate-200">HTML Sitemap</a>
+                            <a href="#robots" class="hover:text-slate-200">Robots.txt</a>
+                        </div>
+                    </footer>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: CODE BLUEPRINT VIEWER (INDEX, STYLE, SCRIPT) -->
+        <!-- ========================================== -->
+        <div id="view-code" class="hidden flex-1 flex flex-col bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden">
+            
+            <!-- Code Tab Navigation Header -->
+            <div class="bg-slate-900 border-b border-slate-700 px-4 py-2 flex flex-wrap justify-between items-center gap-2">
+                <div class="flex items-center gap-2">
+                    <button id="tab-btn-index" onclick="switchCodeTab('index')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white flex items-center gap-2">
+                        <i class="fa-brands fa-html5 text-orange-400"></i> index.html
+                    </button>
+                    <button id="tab-btn-css" onclick="switchCodeTab('css')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 flex items-center gap-2">
+                        <i class="fa-brands fa-css3-alt text-blue-400"></i> style.css
+                    </button>
+                    <button id="tab-btn-js" onclick="switchCodeTab('js')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 flex items-center gap-2">
+                        <i class="fa-brands fa-js text-yellow-400"></i> script.js
+                    </button>
+                </div>
+                <button onclick="copyCurrentCode()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-600 text-xs flex items-center gap-1.5 transition-all">
+                    <i class="fa-solid fa-copy"></i> Copy File Code
+                </button>
+            </div>
+
+            <!-- Code Editor Box -->
+            <div class="flex-1 p-4 bg-slate-950 overflow-auto font-mono text-xs max-h-[700px]">
+                
+                <!-- HTML Code Tab -->
+                <pre id="code-content-index" class="language-html leading-relaxed"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    <!-- Meta Character Encoding -->
+    &lt;meta charset="UTF-8"&gt;
+    
+    <!-- Viewport for Responsive / Mobile-First Indexing -->
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    <!-- Title Tag (50-60 characters, primary keywords first) -->
+    &lt;title&gt;SEO Architecture Masterclass: Optimal HTML Structure Guide&lt;/title&gt;
+    
+    <!-- Meta Description (~155 characters) -->
+    &lt;meta name="description" content="Master semantic HTML5 markup, structured JSON-LD data, heading hierarchies, open graph tags, and image optimization for maximum search engine performance."&gt;
+    
+    <!-- Canonical Tag (Prevents Duplicate Content Penalty) -->
+    &lt;link rel="canonical" href="https://example.com/articles/seo-structure-guide"&gt;
+    
+    <!-- Robots Directives -->
+    &lt;meta name="robots" content="index, follow, max-image-preview:large"&gt;
+    
+    <!-- Open Graph Tags for Social Sharing (Facebook, LinkedIn) -->
+    &lt;meta property="og:type" content="article"&gt;
+    &lt;meta property="og:title" content="SEO Architecture Masterclass: Optimal HTML Structure Guide"&gt;
+    &lt;meta property="og:description" content="Complete technical masterclass on building 100% SEO-compliant web applications."&gt;
+    &lt;meta property="og:url" content="https://example.com/articles/seo-structure-guide"&gt;
+    &lt;meta property="og:image" content="https://example.com/og-cover-image.jpg"&gt;
+    
+    <!-- Twitter Card Meta Tags -->
+    &lt;meta name="twitter:card" content="summary_large_image"&gt;
+    &lt;meta name="twitter:title" content="SEO Architecture Masterclass"&gt;
+    &lt;meta name="twitter:description" content="Complete technical masterclass on building SEO-compliant web pages."&gt;
+    &lt;meta name="twitter:image" content="https://example.com/twitter-cover.jpg"&gt;
+    
+    <!-- Favicon Links -->
+    &lt;link rel="icon" href="/favicon.ico" sizes="any"&gt;
+    &lt;link rel="icon" href="/icon.svg" type="image/svg+xml"&gt;
+    &lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;
+    
+    <!-- External Stylesheet -->
+    &lt;link rel="stylesheet" href="style.css"&gt;
+    
+    <!-- Structured Data: Schema.org (JSON-LD) -->
+    &lt;script type="application/ld+json"&gt;
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "SEO Architecture Masterclass: Optimal HTML Structure Guide",
+      "description": "Master semantic HTML5 markup, structured JSON-LD data, and heading hierarchies.",
+      "image": "https://example.com/og-cover-image.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "Alex Rivera"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "SEO Studio",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://example.com/logo.png"
+        }
+      },
+      "datePublished": "2026-10-24",
+      "dateModified": "2026-10-24"
+    }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    <!-- Header Navigation Section -->
+    &lt;header class="site-header"&gt;
+        &lt;a href="#main-content" class="skip-to-content"&gt;Skip to Main Content&lt;/a&gt;
+        &lt;nav aria-label="Main Navigation"&gt;
+            &lt;a href="/" class="brand-logo"&gt;SEO Masterclass&lt;/a&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/guides"&gt;Guides&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/tools"&gt;Tools&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    <!-- Breadcrumb Navigation -->
+    &lt;nav aria-label="Breadcrumb" class="breadcrumb"&gt;
+        &lt;ol itemscope itemtype="https://schema.org/BreadcrumbList"&gt;
+            &lt;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"&gt;
+                &lt;a itemprop="item" href="/"&gt;&lt;span itemprop="name"&gt;Home&lt;/span&gt;&lt;/a&gt;
+                &lt;meta itemprop="position" content="1" /&gt;
+            &lt;/li&gt;
+            &lt;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"&gt;
+                &lt;a itemprop="item" href="/articles"&gt;&lt;span itemprop="name"&gt;Articles&lt;/span&gt;&lt;/a&gt;
+                &lt;meta itemprop="position" content="2" /&gt;
+            &lt;/li&gt;
+            &lt;li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"&gt;
+                &lt;span itemprop="name"&gt;SEO Guide&lt;/span&gt;
+                &lt;meta itemprop="position" content="3" /&gt;
+            &lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/nav&gt;
+
+    <!-- Main Content Wrapper -->
+    &lt;main id="main-content"&gt;
+        &lt;article&gt;
+            &lt;header&gt;
+                <!-- Strict Single H1 -->
+                &lt;h1&gt;Complete SEO Compliance Blueprint&lt;/h1&gt;
+                &lt;p class="byline"&gt;By Alex Rivera &bull; Published Oct 24, 2026&lt;/p&gt;
+            &lt;/header&gt;
+
+            <!-- Table of Contents -->
+            &lt;nav aria-label="Table of Contents" class="toc"&gt;
+                &lt;h2&gt;Table of Contents&lt;/h2&gt;
+                &lt;ul id="toc-list"&gt;&lt;!-- Dynamic Generated JS --&gt;&lt;/ul&gt;
+            &lt;/nav&gt;
+
+            <!-- Subsections with Logical Headings -->
+            &lt;section id="heading-hierarchy"&gt;
+                &lt;h2&gt;1. Heading Hierarchy Standards&lt;/h2&gt;
+                &lt;p&gt;Keep headings nested logically without skipping levels.&lt;/p&gt;
+                &lt;h3&gt;Subtopic: H3 Element Nesting&lt;/h3&gt;
+                &lt;p&gt;Ensures clear entity segmentation.&lt;/p&gt;
+            &lt;/section&gt;
+
+            &lt;section id="image-optimization"&gt;
+                &lt;h2&gt;2. Image Asset Optimization&lt;/h2&gt;
+                &lt;figure&gt;
+                    &lt;img 
+                        src="diagram.jpg" 
+                        alt="Diagram explaining semantic search engine web crawler layout parsing" 
+                        width="800" 
+                        height="400" 
+                        loading="lazy" 
+                        decoding="async"
+                    &gt;
+                    &lt;figcaption&gt;Figure 1: Semantic Document Architecture&lt;/figcaption&gt;
+                &lt;/figure&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;
+
+        <!-- Sidebar / Supplemental -->
+        &lt;aside&gt;
+            &lt;h2&gt;Related Topics&lt;/h2&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/schema-guide"&gt;Schema.org Tutorials&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+
+    <!-- Footer -->
+    &lt;footer&gt;
+        &lt;p&gt;&amp;copy; 2026 SEO Reference Architecture&lt;/p&gt;
+    &lt;/footer&gt;
+
+    &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+                <!-- CSS Code Tab -->
+                <pre id="code-content-css" class="language-css hidden leading-relaxed"><code>/* ==========================================
+   STYLE.CSS - Accessible & SEO Optimized Rules
+   ========================================== */
+
+/* 1. Reset & Accessibility Focus States */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #1e293b;
+    background-color: #f8fafc;
+}
+
+/* Accessibility: Visible Focus Indicators for Keyboard Nav */
+:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+}
+
+/* Skip Link for Accessibility */
+.skip-to-content {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: #2563eb;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    z-index: 100;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+    top: 1rem;
+}
+
+/* 2. Responsive Image Standards (Prevent CLS) */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 3. Typography Hierarchy */
+h1 {
+    font-size: 2.25rem;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    color: #0f172a;
+}
+
+h2 {
+    font-size: 1.5rem;
+    line-height: 1.35;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #1e293b;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #334155;
+}
+
+/* 4. Semantic Internal Links */
+a {
+    color: #2563eb;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}</code></pre>
+
+                <!-- JS Code Tab -->
+                <pre id="code-content-js" class="language-javascript hidden leading-relaxed"><code>/* ==========================================
+   SCRIPT.JS - Dynamic SEO Enhancements
+   ========================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Dynamic Table of Contents Generation
+    // Crawlers parse structured lists, and users get instant jump-navigation.
+    generateTableOfContents();
+
+    // 2. Dynamic Schema Insertion or Validation
+    console.log("SEO Compliance Verification: DOM fully parsed & valid.");
+});
+
+/**
+ * Builds an automated Table of Contents based on valid page H2 tags.
+ */
+function generateTableOfContents() {
+    const tocList = document.getElementById('toc-list');
+    const headings = document.querySelectorAll('main article h2');
+
+    if (!tocList || headings.length === 0) return;
+
+    headings.forEach((heading, index) => {
+        // Ensure each heading has an ID for fragment linking
+        if (!heading.id) {
+            heading.id = `section-heading-${index + 1}`;
+        }
+
+        const listItem = document.createElement('li');
+        const link = document.createElement('a');
+        
+        link.href = `#${heading.id}`;
+        link.textContent = heading.textContent;
+        link.className = "toc-link";
+
+        listItem.appendChild(link);
+        tocList.appendChild(listItem);
+    });
+}</code></pre>
+
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: COMPREHENSIVE SEO AUDIT CHECKLIST -->
+        <!-- ========================================== -->
+        <div id="view-audit" class="hidden bg-slate-800 p-6 rounded-2xl border border-slate-700 space-y-6">
+            <div>
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-emerald-400"></i> Technical SEO Audit & Criteria Compliance
+                </h2>
+                <p class="text-xs text-slate-400">Reference table detailing every essential factor required for modern Google Search indexing.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                
+                <!-- Category 1 -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2">
+                    <div class="text-blue-400 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-code"></i> 1. Head & Meta Tags
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> <code>&lt;!DOCTYPE html&gt;</code> declaration</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> <code>lang="en"</code> attribute on HTML tag</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> UTF-8 Charset & Viewport Meta</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Canonical Tag matching exact URL</li>
+                    </ul>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2">
+                    <div class="text-emerald-400 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-sitemap"></i> 2. Semantic Hierarchy
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Exactly ONE <code>&lt;h1&gt;</code> per document</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Sequential <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> order</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Layout tags: header, main, article, footer</li>
+                    </ul>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2">
+                    <div class="text-purple-400 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes"></i> 3. Structured Data & Social
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Schema.org JSON-LD TechArticle block</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Open Graph protocol tags (og:title, etc.)</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Twitter Card meta parameters</li>
+                    </ul>
+                </div>
+
+                <!-- Category 4 -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2">
+                    <div class="text-cyan-400 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-image"></i> 4. Media & Performance
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Descriptive <code>alt</code> attributes on images</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Explicit width/height to prevent layout shifts</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> <code>loading="lazy"</code> native browser optimization</li>
+                    </ul>
+                </div>
+
+                <!-- Category 5 -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2">
+                    <div class="text-amber-400 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-link"></i> 5. Navigation & Links
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Schema BreadcrumbList Markup</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Keyword-rich descriptive link anchor text</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Dynamic Table of Contents (TOC) links</li>
+                    </ul>
+                </div>
+
+                <!-- Category 6 -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 space-y-2">
+                    <div class="text-rose-400 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-universal-access"></i> 6. Accessibility & Vitals
+                    </div>
+                    <ul class="space-y-1.5 text-slate-300">
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> ARIA landmark labels (<code>aria-label</code>)</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Contrast-compliant color palettes</li>
+                        <li class="flex items-start gap-1.5"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i> Mobile-first fluid layout scaling</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- App JavaScript Logic -->
+    <script>
+        // Current active code tab tracker
+        let activeCodeTab = 'index';
+
+        // SEO Info Explanations Map
+        const seoExplanations = {
+            'head-meta': {
+                title: 'Meta Tags & Canonical Headers',
+                desc: 'Meta charset ensures proper symbol parsing. Meta viewport guarantees mobile-first rendering. Canonical tags prevent Google from penalizing duplicate content across URL variations.'
+            },
+            'json-ld': {
+                title: 'Structured JSON-LD Data',
+                desc: 'JSON-LD provides search engines with explicit facts about a page. Using TechArticle schema helps Google generate rich snippets in search results.'
+            },
+            'headings': {
+                title: 'Strict Heading Hierarchy (H1 - H3)',
+                desc: 'Maintain exactly ONE <h1> tag per page. Nested <h2> and <h3> tags organize content logically, assisting both search engine indexers and screen reader users.'
+            },
+            'semantic-nav': {
+                title: 'Breadcrumb Navigation',
+                desc: 'Breadcrumb markup labeled with Schema.org JSON/Microdata allows search engines to show hierarchical breadcrumb paths in search listings.'
+            },
+            'article-main': {
+                title: 'Semantic HTML5 Structural Tags',
+                desc: 'Using <main>, <article>, and <section> tags helps web crawlers differentiate core content from navigation menus, sidebars, and footers.'
+            },
+            'seo-image': {
+                title: 'Image Alt Text & Layout Shift Prevention',
+                desc: 'Descriptive alt text provides search bots with image context. Defining explicit width/height attributes prevents layout shifts (CLS), improving Core Web Vitals.'
+            }
+        };
+
+        // Initialize Dynamic Table of Contents on load
+        window.addEventListener('DOMContentLoaded', () => {
+            buildDynamicTOC();
+        });
+
+        // Dynamic Table of Contents Builder
+        function buildDynamicTOC() {
+            const tocContainer = document.getElementById('dynamic-toc');
+            const sections = document.querySelectorAll('#target-article-main h2');
+            
+            if (!tocContainer || sections.length === 0) return;
+            tocContainer.innerHTML = '';
+
+            sections.forEach((sec, idx) => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#${sec.parentElement.id}`;
+                a.textContent = sec.textContent.trim();
+                a.className = 'hover:underline text-blue-400';
+                li.appendChild(a);
+                tocContainer.appendChild(li);
+            });
+        }
+
+        // View Mode Switcher
+        function switchView(viewName) {
+            const previewView = document.getElementById('view-preview');
+            const codeView = document.getElementById('view-code');
+            const auditView = document.getElementById('view-audit');
+
+            const btnPreview = document.getElementById('btn-preview');
+            const btnCode = document.getElementById('btn-code');
+            const btnAudit = document.getElementById('btn-audit');
+
+            // Reset Tab styling
+            [btnPreview, btnCode, btnAudit].forEach(btn => {
+                btn.className = "px-4 py-1.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all";
+            });
+
+            // Hide all views
+            previewView.classList.add('hidden');
+            codeView.classList.add('hidden');
+            auditView.classList.add('hidden');
+
+            if (viewName === 'preview') {
+                previewView.classList.remove('hidden');
+                btnPreview.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white shadow";
+            } else if (viewName === 'code') {
+                codeView.classList.remove('hidden');
+                btnCode.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white shadow";
+            } else if (viewName === 'audit') {
+                auditView.classList.remove('hidden');
+                btnAudit.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white shadow";
+            }
+        }
+
+        // Highlight active SEO component in Live Preview
+        function highlightSEO(key) {
+            // Remove active state from all highlights
+            document.querySelectorAll('.seo-highlight').forEach(el => {
+                el.classList.remove('seo-active');
+            });
+
+            const target = document.getElementById(`target-${key}`);
+            const infoBox = document.getElementById('inspector-info');
+
+            if (target) {
+                target.classList.add('seo-active');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            if (infoBox && seoExplanations[key]) {
+                infoBox.innerHTML = `
+                    <div class="flex items-center gap-2 text-emerald-400 font-semibold text-xs">
+                        <i class="fa-solid fa-circle-check"></i> ${seoExplanations[key].title}
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        ${seoExplanations[key].desc}
+                    </p>
+                `;
+            }
+        }
+
+        // Switch source code file view tabs
+        function switchCodeTab(tab) {
+            activeCodeTab = tab;
+
+            const tabIndex = document.getElementById('tab-btn-index');
+            const tabCss = document.getElementById('tab-btn-css');
+            const tabJs = document.getElementById('tab-btn-js');
+
+            const contentIndex = document.getElementById('code-content-index');
+            const contentCss = document.getElementById('code-content-css');
+            const contentJs = document.getElementById('code-content-js');
+
+            // Reset tab styles
+            [tabIndex, tabCss, tabJs].forEach(btn => {
+                btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:bg-slate-800 flex items-center gap-2";
+            });
+
+            // Hide code contents
+            contentIndex.classList.add('hidden');
+            contentCss.classList.add('hidden');
+            contentJs.classList.add('hidden');
+
+            if (tab === 'index') {
+                tabIndex.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white flex items-center gap-2";
+                contentIndex.classList.remove('hidden');
+            } else if (tab === 'css') {
+                tabCss.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white flex items-center gap-2";
+                contentCss.classList.remove('hidden');
+            } else if (tab === 'js') {
+                tabJs.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white flex items-center gap-2";
+                contentJs.classList.remove('hidden');
+            }
+        }
+
+        // Copy source code to clipboard
+        function copyCurrentCode() {
+            let targetCodeId = 'code-content-index';
+            if (activeCodeTab === 'css') targetCodeId = 'code-content-css';
+            if (activeCodeTab === 'js') targetCodeId = 'code-content-js';
+
+            const codeElement = document.getElementById(targetCodeId);
+            if (!codeElement) return;
+
+            const textToCopy = codeElement.textContent;
+
+            // Use execCommand fallback for sandbox iFrame compatibility
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                alert(`Successfully copied ${activeCodeTab} code to clipboard!`);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            document.body.removeChild(textarea);
+        }
+    </script>
+</body>
+</html>
